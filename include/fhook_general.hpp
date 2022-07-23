@@ -8,7 +8,7 @@
 */
 
 /**
- * This file contains the declaration of all platform-independent code of the library.
+ * This file contains the declaration of the main class of the library.
  * The file must be included after OS- and hardware-dependent headers.
 */
 
