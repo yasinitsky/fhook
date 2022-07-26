@@ -65,4 +65,4 @@ namespace fhook
 }
 
 
-#endif // FHOOK_HPP
+#endif // FHOOK_GENERAL_HPP
