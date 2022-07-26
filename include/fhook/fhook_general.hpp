@@ -22,7 +22,7 @@ namespace fhook
     */
     typedef void* VoidPointer;
 
-    class hook
+    class Hook
     {
         public:
             /**
@@ -37,7 +37,7 @@ namespace fhook
              * 
              * scopeDependent - remove the hook in the destructor?
             */
-            hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false) : target(target), trap(trap), nextOpcode(nextOpcode), scopeDependent(scopeDependent) {}
+            Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false) : target(target), trap(trap), nextOpcode(nextOpcode), scopeDependent(scopeDependent) {}
 
             /**
              * Install a hook.
@@ -54,7 +54,7 @@ namespace fhook
              * 
              * If scopeDependent is true, remove the hook from the function. Otherwise, leave the hook.
             */
-            ~hook();
+            ~Hook();
         private:
             bool scopeDependent;
             bool active = false;
