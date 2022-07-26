@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: 0BSD
  * 
  * Copyright (C) 2022
- * Author: Yaroslav Yasynytskyi <yaroslav.yasynytskyi@student.uj.edu.pl>
+ * Author: Yaroslav Yasynytskyi <yaroslav.yasynytskyi@gmail.com>
 */
 
 /**
  * This file contains the declaration of the main class of the library.
 */
 
-#ifndef FHOOK_HPP
-#define FHOOK_HPP
+#ifndef FHOOK_GENERAL_HPP
+#define FHOOK_GENERAL_HPP
 
 namespace fhook
 {
@@ -20,7 +20,7 @@ namespace fhook
     /**
      * Pointer to data with unspecified type
     */
-    typedef void* vptr_t;
+    typedef void* VoidPointer;
 
     class hook
     {
@@ -37,7 +37,7 @@ namespace fhook
              * 
              * scopeDependent - remove the hook in the destructor?
             */
-            hook(vptr_t target, vptr_t trap, vptr_t nextOpcode, bool scopeDependent = false);
+            hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false) : target(target), trap(trap), nextOpcode(nextOpcode), scopeDependent(scopeDependent) {}
 
             /**
              * Install a hook.
@@ -58,6 +58,9 @@ namespace fhook
         private:
             bool scopeDependent;
             bool active = false;
+            VoidPointer target, trap, nextOpcode;
+
+            
     };
 }
 
