@@ -9,7 +9,6 @@
 
 /**
  * This file contains the declaration of the main class of the library.
- * The file must be included after OS- and hardware-dependent headers.
 */
 
 #ifndef FHOOK_HPP
