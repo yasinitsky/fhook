@@ -14,7 +14,7 @@
 #ifndef FHOOK_EXCEPTIONS_HPP
 #define FHOOK_EXCEPTIONS_HPP
 
-#include "fhook_types.hpp"
+#include "types.hpp"
 
 namespace fhook
 {
