@@ -14,6 +14,8 @@
 #ifndef FHOOK_GENERAL_HPP
 #define FHOOK_GENERAL_HPP
 
+#include "types.hpp"
+
 namespace fhook
 {
 
@@ -60,6 +62,7 @@ namespace fhook
             bool active = false;
             VoidPointer target, trap, nextOpcode;
 
+            MemoryAllocationResult allocateMemory(std::size_t bytes);
             
     };
 }
