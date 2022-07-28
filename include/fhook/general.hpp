@@ -19,11 +19,6 @@
 namespace fhook
 {
 
-    /**
-     * Pointer to data with unspecified type
-    */
-    typedef void* VoidPointer;
-
     class Hook
     {
         public:
@@ -63,6 +58,7 @@ namespace fhook
             VoidPointer target, trap, nextOpcode;
 
             MemoryAllocationResult allocateMemory(std::size_t bytes);
+            MemoryProtectionResult protectMemoty(VoidPointer address);
             
     };
 }
