@@ -14,8 +14,6 @@
 #ifndef FHOOK_GENERAL_HPP
 #define FHOOK_GENERAL_HPP
 
-#include "types.hpp"
-
 namespace fhook
 {
 
@@ -29,8 +27,7 @@ namespace fhook
              * 
              * trap - pointer to the function to be called instead of target, must have the same calling convention as the original function
              * 
-             * nextOpcode - pointer to the first opcode of the target function, which is located after the address (target + FHOOK_TRAMPOLINE_SIZE),
-             * where FHOOK_TRAMPOLINE_SIZE - CPU-specific jump operation size
+             * nextOpcode - pointer to the first opcode of the target function, which is located after the address (target + sizeof(fhook::Trampoline))
              * 
              * scopeDependent - remove the hook in the destructor?
             */
@@ -56,9 +53,6 @@ namespace fhook
             bool scopeDependent;
             bool active = false;
             VoidPointer target, trap, nextOpcode;
-
-            MemoryAllocationResult allocateMemory(std::size_t bytes);
-            MemoryProtectionResult protectMemoty(VoidPointer address);
             
     };
 }
