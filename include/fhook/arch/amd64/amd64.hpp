@@ -35,7 +35,7 @@ namespace fhook
         uint32_t upperBytes = 0x00000000;
         uint8_t pushLowerBytes = 0x68;      // push dword lowerBytes
         uint32_t lowerBytes = 0x00000000;
-        uint32_t ret = 0xc3;                // ret
+        uint8_t ret = 0xc3;                // ret
     } Jump;
     #pragma pack(pop)
 
@@ -51,9 +51,9 @@ namespace fhook
     {
         Jump bytecode;
 
-        bytecode.upperBytes = ((uint32_t*) address)[1];
-        bytecode.lowerBytes = ((uint32_t*) address)[0];
-        
+        bytecode.upperBytes = ((uint32_t*) &address)[1];
+        bytecode.lowerBytes = ((uint32_t*) &address)[0];
+
         return bytecode;
     }
 
@@ -61,7 +61,7 @@ namespace fhook
     {
         Trampoline bytecode;
 
-        for(int i = 0; i < 14; i++)
+        for(int i = 0; i < 15; i++)
         {
             bytecode.oldCode[i] = 0x90; // nop
         }
