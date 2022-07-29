@@ -67,6 +67,17 @@ namespace fhook
                 return "fhook memory protection exception";
             }
     };
+
+    class NotEnoughMemoryException : public BasicException
+    {
+        public:
+            using BasicException::BasicException;
+
+            const char* what() const throw()
+            {
+                return "fhook: not enought memory to install the hook"
+            }
+    }
 };
 
 #endif // FHOOK_EXCEPTIONS_HPP
