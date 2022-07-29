@@ -42,7 +42,7 @@ namespace fhook
     /**
      * The exception that is thrown when an attempt to allocate memory fails.
     */
-    class MemoryAllocationException : public BasicException
+    class MemoryAllocateException : public BasicException
     {
         public:
             using BasicException::BasicException;
@@ -53,7 +53,7 @@ namespace fhook
             }
     };
 
-    class MemoryDeallocationException : public BasicException
+    class MemoryDeallocateException : public BasicException
     {
         public:
             using BasicException::BasicException;
@@ -68,7 +68,7 @@ namespace fhook
     /**
      * The exception that is thrown when an attempt to change the memory access parameters fails.
     */
-    class MemoryProtectionException : public BasicException
+    class MemoryProtectException : public BasicException
     {
         public:
             using BasicException::BasicException;
@@ -79,6 +79,9 @@ namespace fhook
             }
     };
 
+    /**
+     * The exception that is thrown if there is not enough memory in the function bytecode to install the hook.
+    */
     class NotEnoughMemoryException : public BasicException
     {
         public:
