@@ -19,6 +19,9 @@
 
 #include <errno.h>
 #include <sys/mman.h>
+#include <unistd.h>
+
+#include <stdint.h>
 
 namespace fhook
 {
@@ -46,6 +49,23 @@ namespace fhook
         return errno;
     }
 
+    MemoryAllocationResult allocateMemory(size_t length)
+    {
+        MemoryAllocationResult mem = mmap(NULL, length, MEMORY_PROTECTION_ALL, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+        return mem;
+    }
+
+    MemoryProtectionResult protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection)
+    {
+        long pageSize = sysconf(_SC_PAGESIZE);
+
+        if(pageSize == -1) return 0;
+
+        VoidPointer alignedAddress = (VoidPointer)( (uint64_t)address & ~(pageSize-1) );
+        size_t newLength = ( (size_t)address + length ) - (size_t)alignedAddress;
+
+        return mprotect(alignedAddress, newLength, protection);
+    }
 }
 
 
