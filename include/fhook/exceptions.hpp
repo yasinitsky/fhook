@@ -53,6 +53,17 @@ namespace fhook
             }
     };
 
+    class MemoryDeallocationException : public BasicException
+    {
+        public:
+            using BasicException::BasicException;
+
+            const char* what() const throw()
+            {
+                return "fhook: cannot deallocate memory";
+            }
+    };
+
 
     /**
      * The exception that is thrown when an attempt to change the memory access parameters fails.
