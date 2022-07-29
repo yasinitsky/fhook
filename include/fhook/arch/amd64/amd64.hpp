@@ -27,6 +27,17 @@
 
 namespace fhook
 {
+
+    #pragma pack(push, 1)
+    typedef struct
+    {
+        uint8_t pushUpperBytes = 0x68;
+        uint32_t upperBytes = 0x00000000;
+        uint8_t pushLowerBytes = 0x68;
+        uint32_t lowerBytes = 0x00000000;
+    } Jump;
+    #pragma pack(pop)
+
     #pragma pack(push, 1)
     typedef struct
     {
@@ -36,6 +47,14 @@ namespace fhook
         uint16_t jmp = 0xe0ff;      // jmp rax
     } Trampoline;
     #pragma pack(pop)
+
+    Jump makeJump(VoidPointer address)
+    {
+        Jump bytecode;
+        bytecode.upperBytes = ((uint32_t*) address)[1];
+        bytecode.lowerBytes = ((uint32_t*) address)[0];
+        return bytecode;
+    }
 
     Trampoline makeTrampoline(VoidPointer address)
     {
