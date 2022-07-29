@@ -75,7 +75,7 @@ namespace fhook
 
             const char* what() const throw()
             {
-                return "fhook: memory region cannot be protected";
+                return "fhook: memory region cannot be (un)protected";
             }
     };
 
