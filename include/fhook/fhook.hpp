@@ -42,6 +42,7 @@ namespace fhook
     #error "fhook: unsupported architecture"
 #endif
 
+#include "exceptions.hpp"
 #include "general.hpp"
 
 #endif // FHOOK_HPP
