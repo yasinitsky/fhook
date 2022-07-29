@@ -11,7 +11,7 @@
  * This file contains all OS-dependent types, function and constants for Unix (Linux and some BSD's).
 */
 
-#if (defined __linux__ || defined __OpenBSD__ || defined __NetBDS__ || defined __FreeBDS__) && !defined __ANDROID__
+#if (defined __linux__ || defined __OpenBSD__ || defined __NetBSD__ || defined __FreeBSD__) && !defined __ANDROID__
 #define FHOOK_OS_INCLUDED
 
 #ifndef FHOOK_OS_UNIX_HPP
