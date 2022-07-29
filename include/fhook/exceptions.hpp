@@ -14,7 +14,7 @@
 #ifndef FHOOK_EXCEPTIONS_HPP
 #define FHOOK_EXCEPTIONS_HPP
 
-#include "types.hpp"
+#include <stdexcept>
 
 namespace fhook
 {
@@ -27,7 +27,7 @@ namespace fhook
         public:
             BasicException(ErrorCode errCode) : errCode(errCode) {}
 
-            virtual const char* what() const throw();
+            virtual const char* what() const throw() = 0;
 
             ErrorCode getErrorCode() const
             {
@@ -85,13 +85,13 @@ namespace fhook
     class NotEnoughMemoryException : public BasicException
     {
         public:
-            using BasicException::BasicException;
+            NotEnoughMemoryException() : BasicException(getErrorCode()) {}
 
             const char* what() const throw()
             {
-                return "fhook: not enought memory to install the hook"
+                return "fhook: not enought memory to install the hook";
             }
-    }
+    };
 };
 
 #endif // FHOOK_EXCEPTIONS_HPP
