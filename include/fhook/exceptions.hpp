@@ -49,7 +49,7 @@ namespace fhook
 
             const char* what() const throw()
             {
-                return "fhook memory allocation exception";
+                return "fhook: cannot allocate memory";
             }
     };
 
@@ -64,7 +64,7 @@ namespace fhook
 
             const char* what() const throw()
             {
-                return "fhook memory protection exception";
+                return "fhook: memory region cannot be protected";
             }
     };
 
