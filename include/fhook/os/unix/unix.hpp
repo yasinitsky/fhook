@@ -49,9 +49,10 @@ namespace fhook
         return errno;
     }
 
-    MemoryAllocationResult allocateMemory(size_t length)
+    MemoryAllocationResult allocateMemory(size_t length, VoidPointer* address)
     {
         MemoryAllocationResult mem = mmap(NULL, length, MEMORY_PROTECTION_ALL, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+        *address = mem;
         return mem;
     }
 
