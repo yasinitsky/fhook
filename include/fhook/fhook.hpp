@@ -14,9 +14,16 @@
 #ifndef FHOOK_HPP
 #define FHOOK_HPP
 
+#if defined _MSC_VER
+    typedef unsigned __int8 uint8_t;
+#else
+    #include <stdint.h>
+#endif
+
 namespace fhook
 {
     typedef void* VoidPointer;
+    typedef uint8_t* BytePointer;
 }
 
 /**
