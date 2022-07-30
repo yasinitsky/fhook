@@ -11,8 +11,8 @@
  * This file contains the declaration of the main class of the library.
 */
 
-#ifndef FHOOK_GENERAL_HPP
-#define FHOOK_GENERAL_HPP
+#ifndef FHOOK_HOOK_HPP
+#define FHOOK_HOOK_HPP
 
 #include <iostream>
 #include <cstdio>
@@ -34,48 +34,9 @@ namespace fhook
              * 
              * scopeDependent - remove the hook in the destructor?
             */
-            Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false) : target(target), trap(trap), nextOpcode(nextOpcode), scopeDependent(scopeDependent)
-            {
-                if((getDisplacement(nextOpcode, target)) < sizeof(Jump))
-                    throw NotEnoughMemoryException();
-            }
+            Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false);
 
-            VoidPointer install()
-            {
-                Trampoline* trampolineAddr;
-
-                MemoryAllocationResult alloc = allocateMemory(sizeof(Trampoline), (VoidPointer*) &trampolineAddr);
-                MemoryProtectionResult protect;
-                Trampoline trampoline;
-                Jump jump;
-
-                if(!memoryAllocationSuccess(alloc))
-                    throw MemoryAllocateException(getErrorCode());
-
-                this->trampolineAddr = trampolineAddr;
-
-                protect = protectMemory(trampolineAddr, sizeof(Trampoline), MEMORY_PROTECTION_ALL);
-
-                if(!memoryProtectionSuccess(protect))
-                    throw MemoryProtectException(getErrorCode());
-
-                protect = protectMemory(target, sizeof(Jump), MEMORY_PROTECTION_ALL);
-
-                if(!memoryProtectionSuccess(protect))
-                    throw MemoryProtectException(getErrorCode());
-
-                trampoline = makeTrampoline(nextOpcode);
-                jump = makeJump(trap);
-
-                memoryCopy((VoidPointer) trampoline.oldCode, target, getDisplacement(nextOpcode, target));
-                memoryCopy((VoidPointer) trampolineAddr, (VoidPointer) &trampoline, sizeof(Trampoline));
-
-                memoryCopy(target, (VoidPointer) &jump, sizeof(Jump));
-
-                memoryDump(trampolineAddr, sizeof(Trampoline));
-
-                return trampolineAddr;
-            }
+            VoidPointer install();
 
             /**
              * Remove a hook.
@@ -87,7 +48,7 @@ namespace fhook
              * 
              * If scopeDependent is true, remove the hook from the function. Otherwise, leave the hook.
             */
-            ~Hook() {}
+            ~Hook();
         private:
             bool scopeDependent;
             bool active = false;
@@ -96,35 +57,19 @@ namespace fhook
             VoidPointer nextOpcode;
             Trampoline* trampolineAddr = nullptr;
 
-            void memoryCopy(VoidPointer destination, VoidPointer source, size_t length)
-            {
-                BytePointer destinationByte = (BytePointer) destination;
-                BytePointer sourceByte = (BytePointer) source;
-
-                for(int i = 0; i < length; i++)
-                {
-                    destinationByte[i] = sourceByte[i];
-                }
-            }
-
-            LongestInteger getDisplacement(VoidPointer first, VoidPointer second)
-            {
-                return (LongestInteger) ( (BytePointer)first - (BytePointer)second );
-            }
-
-        public:
+            void memoryCopy(VoidPointer destination, VoidPointer source, size_t length);
+            LongestInteger getDisplacement(VoidPointer first, VoidPointer second);
             void memoryDump(VoidPointer address, size_t length)
-            {
-                for(size_t i = 0; i < length; i++)
-                {
-                    printf("%02hhx ", ((BytePointer) address)[i]);
-                }
 
-                printf("\n");
-            }
+            inline bool memoryAllocationSuccess(MemoryAllocationResult result);
+            inline bool memoryProtectionSuccess(MemoryProtectionResult result);
+            inline ErrorCode getErrorCode();
+            MemoryAllocationResult allocateMemory(size_t length, VoidPointer* address);
+            MemoryProtectionResult protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection);
+            
             
     };
 }
 
 
-#endif // FHOOK_GENERAL_HPP
+#endif // FHOOK_HOOK_HPP
