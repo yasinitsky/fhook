@@ -25,7 +25,7 @@ namespace fhook
     class BasicException : public std::exception
     {
         public:
-            BasicException(ErrorCode errCode, char* description) : errCode(errCode), description(description) {}
+            BasicException(ErrorCode errCode, const char* description) : errCode(errCode), description(description) {}
 
             const char* what() const throw() { return description; }
 
