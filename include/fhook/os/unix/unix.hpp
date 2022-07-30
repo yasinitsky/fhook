@@ -33,40 +33,6 @@ namespace fhook
     const MemoryProtectionFlags MEMORY_PROTECTION_DEFAULT = PROT_EXEC | PROT_READ;
 
     typedef int ErrorCode;
-
-    inline bool memoryAllocationSuccess(MemoryAllocationResult result)
-    {
-        return (result != MAP_FAILED);
-    }
-
-    inline bool memoryProtectionSuccess(MemoryProtectionResult result)
-    {
-        return (result == 0);
-    }
-
-    inline ErrorCode getErrorCode()
-    {
-        return errno;
-    }
-
-    MemoryAllocationResult allocateMemory(size_t length, VoidPointer* address)
-    {
-        MemoryAllocationResult mem = mmap(NULL, length, MEMORY_PROTECTION_ALL, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-        *address = mem;
-        return mem;
-    }
-
-    MemoryProtectionResult protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection)
-    {
-        long pageSize = sysconf(_SC_PAGESIZE);
-
-        if(pageSize == -1) return 0;
-
-        VoidPointer alignedAddress = (VoidPointer)( (uint64_t)address & ~(pageSize-1) );
-        size_t newLength = ( (size_t)address + length ) - (size_t)alignedAddress;
-
-        return mprotect(alignedAddress, newLength, protection);
-    }
 }
 
 
