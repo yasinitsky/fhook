@@ -14,6 +14,8 @@
 #ifndef FHOOK_HOOK_HPP
 #define FHOOK_HOOK_HPP
 
+#include "types.hpp"
+
 #include <iostream>
 #include <cstdio>
 
@@ -59,15 +61,18 @@ namespace fhook
 
             void memoryCopy(VoidPointer destination, VoidPointer source, size_t length);
             LongestInteger getDisplacement(VoidPointer first, VoidPointer second);
-            void memoryDump(VoidPointer address, size_t length)
+            void memoryDump(VoidPointer address, size_t length);
 
             inline bool memoryAllocationSuccess(MemoryAllocationResult result);
             inline bool memoryProtectionSuccess(MemoryProtectionResult result);
+
             inline ErrorCode getErrorCode();
+
             MemoryAllocationResult allocateMemory(size_t length, VoidPointer* address);
             MemoryProtectionResult protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection);
             
-            
+            Jump makeJump(VoidPointer address);
+            Trampoline makeTrampoline(VoidPointer address);
     };
 }
 
