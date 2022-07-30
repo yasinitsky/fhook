@@ -1,3 +1,16 @@
+/**
+ * This file is part of the fhook library.
+ * 
+ * SPDX-License-Identifier: 0BSD
+ * 
+ * Copyright (C) 2022
+ * Author: Yaroslav Yasynytskyi <yaroslav.yasynytskyi@gmail.com>
+*/
+
+/**
+ * This file contains the implementation of OS-dependent methods for Unix (Linux, OpenBSD, NetBSD, FreeBSD).
+*/
+
 #if (defined __linux__ || defined __OpenBSD__ || defined __NetBSD__ || defined __FreeBSD__) && !defined __ANDROID__
 
 #include <fhook/hook.hpp>

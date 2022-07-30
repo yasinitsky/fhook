@@ -1,3 +1,16 @@
+/**
+ * This file is part of the fhook library.
+ * 
+ * SPDX-License-Identifier: 0BSD
+ * 
+ * Copyright (C) 2022
+ * Author: Yaroslav Yasynytskyi <yaroslav.yasynytskyi@gmail.com>
+*/
+
+/**
+ * This file contains the definition of all used types.
+*/
+
 #ifndef FHOOK_TYPES_HPP
 #define FHOOK_TYPES_HPP
 

@@ -1,3 +1,16 @@
+/**
+ * This file is part of the fhook library.
+ * 
+ * SPDX-License-Identifier: 0BSD
+ * 
+ * Copyright (C) 2022
+ * Author: Yaroslav Yasynytskyi <yaroslav.yasynytskyi@gmail.com>
+*/
+
+/**
+ * This file contains the implementation of architecture-dependent methods for AMD64 (x86_64).
+*/
+
 #if defined __amd64__ || defined _M_AMD64
 
 #include <fhook/hook.hpp>
