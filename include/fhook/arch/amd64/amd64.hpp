@@ -8,7 +8,7 @@
 */
 
 /**
- * This file contains all architecture-dependent types and functions for AMD64 (x86_64).
+ * This file contains all architecture-dependent types for AMD64 (x86_64).
 */
 
 #if defined __amd64__ || defined _M_AMD64
