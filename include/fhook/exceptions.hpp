@@ -38,18 +38,18 @@ namespace fhook
 
 
     /**
-     * The exception that is thrown when an attempt to allocate memory fails.
+     * The exceptions that are thrown when an attempt to (de)allocate memory fails.
     */
     class MemoryAllocateException : public BasicException
     {
         public:
-            using BasicException::BasicException;
+            MemoryAllocateException(ErrorCode errCode) : BasicException(errCode, "fhook: memory allocation error") {}
     };
 
     class MemoryDeallocateException : public BasicException
     {
         public:
-            using BasicException::BasicException;
+            MemoryDeallocateException(ErrorCode errCode) : BasicException(errCode, "fhook: memory deallocation error") {}
     };
 
 
@@ -59,7 +59,7 @@ namespace fhook
     class MemoryProtectException : public BasicException
     {
         public:
-            using BasicException::BasicException;
+            MemoryProtectException(ErrorCode errCode) : BasicException(errCode, "fhook: memory protection error") {}
     };
 
     /**
@@ -68,8 +68,7 @@ namespace fhook
     class NotEnoughMemoryException : std::exception
     {
         public:
-            const char* what() const throw()
-            {
+            const char* what() const throw() {
                 return "fhook: not enought memory to install the hook";
             }
     };
