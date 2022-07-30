@@ -26,6 +26,7 @@
 namespace fhook
 {
     typedef void* MemoryAllocationResult;
+    typedef int MemoryDeallocationResult;
     typedef int MemoryProtectionResult;
     typedef int MemoryProtectionFlags;
 
