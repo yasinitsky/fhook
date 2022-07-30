@@ -35,13 +35,23 @@ namespace fhook
              * nextOpcode - pointer to the first opcode of the target function, which is located after the address (target + sizeof(fhook::Jump))
              * 
              * scopeDependent - remove the hook in the destructor?
+             * 
+             * throw: NotEnoughMemoryException
             */
             Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false);
+
+            /**
+             * Install a hook.
+             * 
+             * throw: MemoryAllocateException, MemoryProtectException
+            */
 
             VoidPointer install();
 
             /**
              * Remove a hook.
+             * 
+             * throw: MemoryProtectException, MemoryDeallocateException
             */
             void remove();
 
