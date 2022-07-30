@@ -22,20 +22,18 @@ namespace fhook
     /**
      * The base virtual class of the exception. All other exceptions are inherited from it.
     */
-    class BasicException
+    class BasicException : public std::exception
     {
         public:
-            BasicException(ErrorCode errCode) : errCode(errCode) {}
+            BasicException(ErrorCode errCode, char* description) : errCode(errCode), description(description) {}
 
-            virtual const char* what() const throw() = 0;
+            const char* what() const throw() { return description; }
 
-            ErrorCode getErrorCode() const
-            {
-                return errCode;
-            }
+            ErrorCode getErrorCode() const { return errCode; }
 
         private:
             ErrorCode errCode;
+            const char* description;
     };
 
 
@@ -46,22 +44,12 @@ namespace fhook
     {
         public:
             using BasicException::BasicException;
-
-            const char* what() const throw()
-            {
-                return "fhook: cannot allocate memory";
-            }
     };
 
     class MemoryDeallocateException : public BasicException
     {
         public:
             using BasicException::BasicException;
-
-            const char* what() const throw()
-            {
-                return "fhook: cannot deallocate memory";
-            }
     };
 
 
@@ -72,21 +60,14 @@ namespace fhook
     {
         public:
             using BasicException::BasicException;
-
-            const char* what() const throw()
-            {
-                return "fhook: memory region cannot be (un)protected";
-            }
     };
 
     /**
      * The exception that is thrown if there is not enough memory in the function bytecode to install the hook.
     */
-    class NotEnoughMemoryException : public BasicException
+    class NotEnoughMemoryException : std::exception
     {
         public:
-            NotEnoughMemoryException() : BasicException(getErrorCode()) {}
-
             const char* what() const throw()
             {
                 return "fhook: not enought memory to install the hook";
