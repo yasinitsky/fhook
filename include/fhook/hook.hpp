@@ -74,11 +74,13 @@ namespace fhook
             void memoryDump(VoidPointer address, size_t length);
 
             inline bool memoryAllocationSuccess(MemoryAllocationResult result);
+            inline bool memoryDeallocationSuccess(MemoryDeallocationResult result);
             inline bool memoryProtectionSuccess(MemoryProtectionResult result);
 
             inline ErrorCode getErrorCode();
 
             MemoryAllocationResult allocateMemory(size_t length, VoidPointer* address);
+            MemoryDeallocationResult deallocateMemory(VoidPointer address, size_t length);
             MemoryProtectionResult protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection);
             
             Jump makeJump(VoidPointer address);
