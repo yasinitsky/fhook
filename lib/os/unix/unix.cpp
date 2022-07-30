@@ -21,6 +21,11 @@ inline bool fhook::Hook::memoryAllocationSuccess(MemoryAllocationResult result)
     return (result != MAP_FAILED);
 }
 
+inline bool fhook::Hook::memoryDeallocationSuccess(MemoryDeallocationResult result)
+{
+    return (result == 0);
+}
+
 inline bool fhook::Hook::memoryProtectionSuccess(MemoryProtectionResult result)
 {
     return (result == 0);
@@ -42,12 +47,24 @@ MemoryProtectionResult fhook::Hook::protectMemory(VoidPointer address, size_t le
 {
     long pageSize = sysconf(_SC_PAGESIZE);
 
-    if(pageSize == -1) return 0;
+    if(pageSize == -1) return -1;
 
     VoidPointer alignedAddress = (VoidPointer)( (uint64_t)address & ~(pageSize-1) );
     size_t newLength = ( (size_t)address + length ) - (size_t)alignedAddress;
 
     return mprotect(alignedAddress, newLength, protection);
+}
+
+MemoryDeallocationResult fhook::Hook::deallocateMemory(VoidPointer address, size_t length)
+{
+    long pageSize = sysconf(_SC_PAGESIZE);
+
+    if(pageSize == -1) return -1;
+
+    VoidPointer alignedAddress = (VoidPointer)( (uint64_t)address & ~(pageSize-1) );
+    size_t newLength = ( (size_t)address + length ) - (size_t)alignedAddress;
+
+    return munmap(alignedAddress, newLength);
 }
 
 #endif // OS-specific macros
