@@ -127,6 +127,3 @@ Hook<PointerType>::~Hook()
 {
     if(scopeDependent && active) remove();
 }
-
-#include "os/unix/unix.cpp"
-#include "arch/amd64/amd64.cpp"
