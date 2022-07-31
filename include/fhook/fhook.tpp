@@ -11,8 +11,7 @@
  * This file contains the implementation of all platform-independent methods of the hook class.
 */
 
-#include <fhook/hook.hpp>
-#include <fhook/exceptions.hpp>
+#include "exceptions.hpp"
 
 using namespace fhook;
 
