@@ -53,12 +53,3 @@ namespace fhook
 #endif // FHOOK_ARCH_AMD64_HPP
 
 #endif // CPU-specific macros
-
-/*
-
-uint8_t movOpcode = 0xc7;
-uint8_t movModRM = 0x44;
-uint8_t movSIB = 0x24;
-uint8_t movOffset = 0x04;
-
-*/
