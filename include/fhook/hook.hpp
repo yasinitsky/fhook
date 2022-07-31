@@ -38,7 +38,7 @@ namespace fhook
              * 
              * throw: NotEnoughMemoryException
             */
-            Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent = false);
+            Hook(VoidPointer target, VoidPointer trap, size_t nextOpcodeOffset, bool scopeDependent = false);
 
             /**
              * Install a hook.

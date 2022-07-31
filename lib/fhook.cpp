@@ -16,10 +16,12 @@
 
 using namespace fhook;
 
-Hook::Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool scopeDependent) : target(target), trap(trap), nextOpcode(nextOpcode), scopeDependent(scopeDependent)
+Hook::Hook(VoidPointer target, VoidPointer trap, size_t nextOpcodeOffset, bool scopeDependent) : target(target), trap(trap), scopeDependent(scopeDependent)
 {
     if(getDisplacement(nextOpcode, target) < sizeof(Jump))
         throw NotEnoughMemoryException();
+
+    nextOpcode = (VoidPointer)( (size_t)target + nextOpcodeOffset );
 }
 
 VoidPointer Hook::install()
