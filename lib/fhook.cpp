@@ -16,17 +16,21 @@
 
 using namespace fhook;
 
-Hook::Hook(VoidPointer target, VoidPointer trap, size_t nextOpcodeOffset, bool scopeDependent) : target(target), trap(trap), scopeDependent(scopeDependent)
+template<typename PointerType>
+Hook<PointerType>::Hook(PointerType target, PointerType trap, size_t nextOpcodeOffset, bool scopeDependent) : scopeDependent(scopeDependent)
 {
-    if(getDisplacement(nextOpcode, target) < sizeof(Jump))
-        throw NotEnoughMemoryException();
+    this->target = (VoidPointer)target;
+    this->trap = (VoidPointer)trap;
+    nextOpcode = (VoidPointer)( (size_t)this->target + nextOpcodeOffset );
 
-    nextOpcode = (VoidPointer)( (size_t)target + nextOpcodeOffset );
+    if(getDisplacement(nextOpcode, this->target) < sizeof(Jump))
+        throw NotEnoughMemoryException();
 }
 
-VoidPointer Hook::install()
+template<typename PointerType>
+PointerType Hook<PointerType>::install()
 {
-    if(active) return trampolineAddr;
+    if(active) return (PointerType)trampolineAddr;
 
     Trampoline* trampolineAddr;
 
@@ -53,16 +57,19 @@ VoidPointer Hook::install()
     trampoline = makeTrampoline(nextOpcode);
     jump = makeJump(trap);
 
+    std::cout << nextOpcode << " " << target << std::endl;
+
     memoryCopy((VoidPointer) trampoline.oldCode, target, getDisplacement(nextOpcode, target));
     memoryCopy((VoidPointer) trampolineAddr, (VoidPointer) &trampoline, sizeof(Trampoline));
     memoryCopy(target, (VoidPointer) &jump, sizeof(Jump));
 
     active = true;
 
-    return trampolineAddr;
+    return (PointerType)trampolineAddr;
 }
 
-void Hook::remove()
+template<typename PointerType>
+void Hook<PointerType>::remove()
 {
     if(!active) return;
 
@@ -86,7 +93,8 @@ void Hook::remove()
 
 }
 
-void Hook::memoryCopy(VoidPointer destination, VoidPointer source, size_t length)
+template<typename PointerType>
+void Hook<PointerType>::memoryCopy(VoidPointer destination, VoidPointer source, size_t length)
 {
     BytePointer destinationByte = (BytePointer) destination;
     BytePointer sourceByte = (BytePointer) source;
@@ -97,12 +105,14 @@ void Hook::memoryCopy(VoidPointer destination, VoidPointer source, size_t length
     }
 }
 
-LongestInteger Hook::getDisplacement(VoidPointer first, VoidPointer second)
+template<typename PointerType>
+LongestInteger Hook<PointerType>::getDisplacement(VoidPointer first, VoidPointer second)
 {
     return ( (LongestInteger)first - (LongestInteger)second );
 }
 
-void Hook::memoryDump(VoidPointer address, size_t length)
+template<typename PointerType>
+void Hook<PointerType>::memoryDump(VoidPointer address, size_t length)
 {
     for(size_t i = 0; i < length; i++)
     {
@@ -112,7 +122,8 @@ void Hook::memoryDump(VoidPointer address, size_t length)
     printf("\n");
 }
 
-Hook::~Hook()
+template<typename PointerType>
+Hook<PointerType>::~Hook()
 {
     if(scopeDependent && active) remove();
 }

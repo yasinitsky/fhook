@@ -16,34 +16,39 @@
 #include <fhook/hook.hpp>
 #include <fhook/os/unix/unix.hpp>
 
-inline bool fhook::Hook::memoryAllocationSuccess(MemoryAllocationResult result)
+template<typename PointerType>
+inline bool fhook::Hook<PointerType>::memoryAllocationSuccess(MemoryAllocationResult result)
 {
     return (result != MAP_FAILED);
 }
-
-inline bool fhook::Hook::memoryDeallocationSuccess(MemoryDeallocationResult result)
+template<typename PointerType>
+inline bool fhook::Hook<PointerType>::memoryDeallocationSuccess(MemoryDeallocationResult result)
 {
     return (result == 0);
 }
 
-inline bool fhook::Hook::memoryProtectionSuccess(MemoryProtectionResult result)
+template<typename PointerType>
+inline bool fhook::Hook<PointerType>::memoryProtectionSuccess(MemoryProtectionResult result)
 {
     return (result == 0);
 }
 
-inline ErrorCode fhook::Hook::getErrorCode()
+template<typename PointerType>
+inline ErrorCode fhook::Hook<PointerType>::getErrorCode()
 {
     return errno;
 }
 
-MemoryAllocationResult fhook::Hook::allocateMemory(size_t length, VoidPointer* address)
+template<typename PointerType>
+MemoryAllocationResult fhook::Hook<PointerType>::allocateMemory(size_t length, VoidPointer* address)
 {
     MemoryAllocationResult mem = mmap(NULL, length, MEMORY_PROTECTION_ALL, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
     *address = mem;
     return mem;
 }
 
-MemoryProtectionResult fhook::Hook::protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection)
+template<typename PointerType>
+MemoryProtectionResult fhook::Hook<PointerType>::protectMemory(VoidPointer address, size_t length, MemoryProtectionFlags protection)
 {
     long pageSize = sysconf(_SC_PAGESIZE);
 
@@ -55,7 +60,8 @@ MemoryProtectionResult fhook::Hook::protectMemory(VoidPointer address, size_t le
     return mprotect(alignedAddress, newLength, protection);
 }
 
-MemoryDeallocationResult fhook::Hook::deallocateMemory(VoidPointer address, size_t length)
+template<typename PointerType>
+MemoryDeallocationResult fhook::Hook<PointerType>::deallocateMemory(VoidPointer address, size_t length)
 {
     long pageSize = sysconf(_SC_PAGESIZE);
 

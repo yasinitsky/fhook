@@ -16,7 +16,8 @@
 #include <fhook/hook.hpp>
 #include <fhook/arch/amd64/amd64.hpp>
 
-Jump fhook::Hook::makeJump(VoidPointer address)
+template<typename PointerType>
+Jump fhook::Hook<PointerType>::makeJump(VoidPointer address)
 {
     Jump bytecode;
 
@@ -26,7 +27,8 @@ Jump fhook::Hook::makeJump(VoidPointer address)
     return bytecode;
 }
 
-Trampoline fhook::Hook::makeTrampoline(VoidPointer address)
+template<typename PointerType>
+Trampoline fhook::Hook<PointerType>::makeTrampoline(VoidPointer address)
 {
     Trampoline bytecode;
 

@@ -22,6 +22,7 @@
 namespace fhook
 {
 
+    template<typename PointerType>
     class Hook
     {
         public:
@@ -38,7 +39,7 @@ namespace fhook
              * 
              * throw: NotEnoughMemoryException
             */
-            Hook(VoidPointer target, VoidPointer trap, size_t nextOpcodeOffset, bool scopeDependent = false);
+            Hook(PointerType target, PointerType trap, size_t nextOpcodeOffset, bool scopeDependent = false);
 
             /**
              * Install a hook.
@@ -46,7 +47,7 @@ namespace fhook
              * throw: MemoryAllocateException, MemoryProtectException
             */
 
-            VoidPointer install();
+            PointerType install();
 
             /**
              * Remove a hook.
@@ -88,5 +89,6 @@ namespace fhook
     };
 }
 
+#include "../lib/fhook.cpp"
 
 #endif // FHOOK_HOOK_HPP
