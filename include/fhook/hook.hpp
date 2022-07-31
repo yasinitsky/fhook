@@ -90,7 +90,7 @@ namespace fhook
 }
 
 #include "fhook.tpp"
-#include "os/unix/unix.cpp"
+#include "os/unix/unix.tpp"
 #include "arch/amd64/amd64.tpp"
 
 #endif // FHOOK_HOOK_HPP
