@@ -89,6 +89,6 @@ namespace fhook
     };
 }
 
-#include "../lib/fhook.cpp"
+#include "fhook.tpp"
 
 #endif // FHOOK_HOOK_HPP
