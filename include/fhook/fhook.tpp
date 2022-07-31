@@ -20,7 +20,7 @@ Hook<PointerType>::Hook(PointerType target, PointerType trap, size_t nextOpcodeO
 {
     this->target = (VoidPointer)target;
     this->trap = (VoidPointer)trap;
-    nextOpcode = (VoidPointer)( (size_t)this->target + nextOpcodeOffset );
+    nextOpcode = (VoidPointer)( (size_t)this->target + nextOpcodeOffset - 1);
 
     if(getDisplacement(nextOpcode, this->target) < sizeof(Jump))
         throw NotEnoughMemoryException();
