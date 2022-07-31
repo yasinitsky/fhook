@@ -57,8 +57,6 @@ PointerType Hook<PointerType>::install()
     trampoline = makeTrampoline(nextOpcode);
     jump = makeJump(trap);
 
-    std::cout << nextOpcode << " " << target << std::endl;
-
     memoryCopy((VoidPointer) trampoline.oldCode, target, getDisplacement(nextOpcode, target));
     memoryCopy((VoidPointer) trampolineAddr, (VoidPointer) &trampoline, sizeof(Trampoline));
     memoryCopy(target, (VoidPointer) &jump, sizeof(Jump));
