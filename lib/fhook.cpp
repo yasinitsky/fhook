@@ -24,6 +24,8 @@ Hook::Hook(VoidPointer target, VoidPointer trap, VoidPointer nextOpcode, bool sc
 
 VoidPointer Hook::install()
 {
+    if(active) return trampolineAddr;
+
     Trampoline* trampolineAddr;
 
     MemoryAllocationResult alloc = allocateMemory(sizeof(Trampoline), (VoidPointer*) &trampolineAddr);
@@ -53,7 +55,33 @@ VoidPointer Hook::install()
     memoryCopy((VoidPointer) trampolineAddr, (VoidPointer) &trampoline, sizeof(Trampoline));
     memoryCopy(target, (VoidPointer) &jump, sizeof(Jump));
 
+    active = true;
+
     return trampolineAddr;
+}
+
+void Hook::remove()
+{
+    if(!active) return;
+
+    MemoryProtectionResult protect;
+    MemoryDeallocationResult dealloc;
+    size_t bytesToRestore = getDisplacement(nextOpcode, target);
+    memoryCopy(target, trampolineAddr->oldCode, bytesToRestore);
+
+    active = false;
+
+    protect = protectMemory(target, bytesToRestore, MEMORY_PROTECTION_DEFAULT);
+
+    if(!memoryProtectionSuccess(protect))
+        throw MemoryProtectException(getErrorCode());
+
+    dealloc = deallocateMemory(trampolineAddr, sizeof(Trampoline));
+
+    if(!memoryDeallocationSuccess(dealloc))
+        throw MemoryProtectException(getErrorCode());
+    
+
 }
 
 void Hook::memoryCopy(VoidPointer destination, VoidPointer source, size_t length)
@@ -84,7 +112,7 @@ void Hook::memoryDump(VoidPointer address, size_t length)
 
 Hook::~Hook()
 {
-
+    if(scopeDependent && active) remove();
 }
 
 #include "os/unix/unix.cpp"
