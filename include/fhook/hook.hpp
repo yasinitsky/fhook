@@ -44,9 +44,10 @@ namespace fhook
             /**
              * Install a hook.
              * 
+             * return: pointer to call the original function (trampoline)
+             * 
              * throw: MemoryAllocateException, MemoryProtectException
             */
-
             PointerType install();
 
             /**
