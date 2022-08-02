@@ -31,7 +31,7 @@ namespace fhook
     typedef int64_t LongestInteger;
 
     #pragma pack(push, 1)
-    typedef struct
+    typedef struct Jump
     {
         uint8_t push = 0x68;                // push
         uint32_t lowerBytes = 0x00000000;
