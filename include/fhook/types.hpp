@@ -33,6 +33,7 @@ namespace fhook
 */
 
 #include "os/unix/unix.hpp"
+#include "os/windows/windows.hpp"
 
 #if !defined FHOOK_OS_INCLUDED
     #error "fhook: unsupported operating system"

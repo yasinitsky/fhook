@@ -91,7 +91,10 @@ namespace fhook
 }
 
 #include "fhook.tpp"
+
 #include "os/unix/unix.tpp"
+#include "os/windows/windows.tpp"
+
 #include "arch/amd64/amd64.tpp"
 
 #endif // FHOOK_HOOK_HPP
