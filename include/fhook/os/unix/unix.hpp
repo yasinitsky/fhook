@@ -8,7 +8,7 @@
 */
 
 /**
- * This file contains all OS-dependent types, function and constants for Unix (Linux and some BSD's).
+ * This file contains all OS-dependent types and constants for Unix (Linux and some BSD's).
 */
 
 #if (defined __linux__ || defined __OpenBSD__ || defined __NetBSD__ || defined __FreeBSD__) && !defined __ANDROID__
