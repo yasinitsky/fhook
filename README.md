@@ -31,7 +31,7 @@ First, let's disassemble our function:
     1338:       89 75 f8                mov    DWORD PTR [rbp-0x8],esi
     // ...
 
-The size of the `fhook::Jump` structure in the x86-64 architecture is 15 bytes (we can see this in the file `fhook/arch/amd64/amd64.hpp`). Accordingly, we need to look for the beginning of the instruction at offset 15 from the beginning of the function. In our case, at the address `foo+15` is the beginning of a new instruction (`mov DWORD PTR [rbp-0x4],edi`). Otherwise, we need to look for the beginning of the instruction at address `foo+16`, `foo+17`, etc., until we find. In total, the offset of the first "useful" opcode is 15. Let's code!
+The size of the `fhook::Jump` structure in the x86-64 architecture is 14 bytes (we can see this in the file `fhook/arch/amd64/amd64.hpp`). Accordingly, we need to look for the beginning of the instruction at offset 15 from the beginning of the function. In our case, at the address `foo+15` is the beginning of a new instruction (`mov DWORD PTR [rbp-0x4],edi`). Otherwise, we need to look for the beginning of the instruction at address `foo+16`, `foo+17`, etc., until we find. In total, the offset of the first "useful" opcode is 15. Let's code!
 ## C++17
 ```cpp
 #include <iostream>
