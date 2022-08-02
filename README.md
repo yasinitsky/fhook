@@ -11,6 +11,7 @@ A function hooking library with a clear separation of OS-dependent and architect
 # Currently supported platforms
  - Linux x86-64.
  - FreeBSD, NetBSD, OpenBSD x86-64.
+ - Windows x86-64.
 
 # Installation
 
